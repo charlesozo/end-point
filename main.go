@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	
+	"log"
 	"net/http"
+	"time"
 )
 
 type Obj struct {
@@ -17,6 +18,7 @@ type Obj struct {
 	Status_code     int    `json:"status_code"`
 }
 
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -28,14 +30,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Both parameters 'slack_name' and 'track' are required", http.StatusBadRequest)
 		return
 	}
+	currentDay := time.Now().Format("Monday")
+	currentUtcTime := time.Now().UTC().Format("2006-01-02T15:04:05Z")
 
 	response := Obj{
 		Slack_name:      slackName,
-		Current_day:     "Monday",
-		Utc_time:        "2023-08-21T15:04:05Z",
+		Current_day:    currentDay,
+		Utc_time:        currentUtcTime,
 		Track:           track,
-		Github_file_url: "https://github.com/username/repo/blob/main/file_name.ext",
-		Github_repo_url: "https://github.com/username/repo",
+		Github_file_url: "https://github.com/charlesozo/end-point/blob/main/main.go",
+		Github_repo_url: "https://github.com/charlesozo/end-point",
 		Status_code:     200,
 	}
 
@@ -49,7 +53,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/charlesozo.com/api", handler)
+	http.HandleFunc("/", handler)
 	fmt.Println("Server is running on :8080...")
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
