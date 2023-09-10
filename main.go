@@ -56,7 +56,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/api", handler)
 	fmt.Println("Server is running on :80...")
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
