@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+	
+	
 )
 
 type Obj struct {
@@ -53,7 +55,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", handler)
-	fmt.Println("Server is running on :8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	
+	http.HandleFunc("/charlesozo.com/api", handler)
+	fmt.Println("Server is running on :80...")
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
+
